@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crown of Embers — a card duel</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%99%A0%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <h1><span class="suit-red">♥</span> Crown of Embers <span>♠</span></h1>
+    <div class="top-actions">
+      <button id="soundBtn" type="button">Sound: On</button>
+      <button id="howBtn" type="button">How to play</button>
+      <button id="newBtn" type="button">New game</button>
+    </div>
+  </header>
+
+  <!-- Rival -->
+  <section class="zone" id="rivalZone">
+    <div class="zone-label">
+      <span class="who">Rival — the Ember Court <span class="tag">AI opponent</span></span>
+      <span id="rivalDeckCount"></span>
+    </div>
+    <div class="life-row">
+      <div class="life-bar"><div class="life-fill" id="rivalLifeFill"></div></div>
+      <span class="shield-badge" id="rivalShield" hidden>🛡 0</span>
+      <span class="life-num" id="rivalLifeNum">60 / 60</span>
+    </div>
+    <div class="energy-row" id="rivalEnergy"></div>
+    <div class="hand-label" id="rivalHandLabel">Rival's hand</div>
+    <div class="hand" id="rivalHand"></div>
+  </section>
+
+  <!-- Middle -->
+  <div class="midbar">
+    <div id="log" aria-live="polite"></div>
+    <button id="endTurnBtn" type="button">End turn ⏎</button>
+  </div>
+  <div id="turnBanner"></div>
+
+  <!-- Player -->
+  <section class="zone" id="playerZone">
+    <div class="zone-label">
+      <span class="who">You <span class="tag">challenger</span></span>
+      <span id="playerDeckCount"></span>
+    </div>
+    <div class="life-row">
+      <div class="life-bar"><div class="life-fill" id="playerLifeFill"></div></div>
+      <span class="shield-badge" id="playerShield" hidden>🛡 0</span>
+      <span class="life-num" id="playerLifeNum">60 / 60</span>
+    </div>
+    <div class="energy-row" id="playerEnergy"></div>
+    <div class="hand-label">Your hand — click a card or press 1–7 to play it</div>
+    <div class="hand" id="playerHand"></div>
+  </section>
+  <p class="hint">Keys: 1–7 play a card · Space / Enter ends your turn · First to 0 life loses.</p>
+</div>
+
+<!-- Title screen -->
+<div class="overlay" id="titleScreen">
+  <div class="panel">
+    <h2><span class="suit-red">♥</span> Crown of Embers <span>♠</span></h2>
+    <p class="subtitle">A turn-based card duel for the Ember Crown</p>
+    <p>Two duelists, sixty life each, one crown. Spend energy to play cards from
+    your hand — every card strikes, and its house adds a twist: Spades pierce
+    deeper, Hearts mend your wounds, Clubs rally a fresh card, Diamonds raise a ward.</p>
+    <ul class="rules">
+      <li>🃏 Each turn you draw a card and your energy refills.</li>
+      <li>⚡ A card costs energy equal to its pips (1–3). Attack equals its rank (6–14).</li>
+      <li>♥ Mend heals half the attack · ♠ Pierce deals +2 · ♣ Rally draws 1 · ♦ Ward blocks damage.</li>
+      <li>🏆 Reduce the Rival to 0 life to take the crown.</li>
+    </ul>
+    <button class="big-btn" id="playBtn" type="button">▶ &nbsp;Play</button>
+    <br>
+    <button class="ghost-btn" id="titleHowBtn" type="button">How to play</button>
+  </div>
+</div>
+
+<!-- How to play -->
+<div class="overlay hidden" id="howScreen">
+  <div class="panel">
+    <h2>How to play</h2>
+    <ul class="rules">
+      <li><b>Goal:</b> bring the Rival's life from 60 to 0 before yours falls.</li>
+      <li><b>Your turn:</b> you draw 1 card and your energy refills (2 at first, up to 5).</li>
+      <li><b>Play a card:</b> click it, or press keys 1–7. It costs the gold pips shown; its attack number is the damage it deals.</li>
+      <li><b>Houses:</b> ♠ Spades Pierce (+2 damage) · ♥ Hearts Mend (heal half the attack) · ♣ Clubs Rally (draw 1 card) · ♦ Diamonds Ward (gain a shield that blocks damage).</li>
+      <li><b>Shields</b> absorb damage first, then break.</li>
+      <li><b>End turn:</b> press the End turn button, Space, or Enter. The Rival then plays.</li>
+      <li><b>Deck:</b> 36 cards (ranks 6–A in four houses). When it runs out, your discard pile is reshuffled.</li>
+    </ul>
+    <button class="big-btn" id="howCloseBtn" type="button">Got it</button>
+  </div>
+</div>
+
+<!-- Win screen -->
+<div class="overlay hidden" id="winScreen">
+  <div class="panel">
+    <h2>👑 You win!</h2>
+    <p class="subtitle">The Ember Crown is yours</p>
+    <p class="big-score" id="winScore"></p>
+    <p id="winDetail"></p>
+    <button class="big-btn" id="winAgainBtn" type="button">↻ &nbsp;Play again</button>
+  </div>
+</div>
+
+<!-- Loss screen -->
+<div class="overlay hidden" id="lossScreen">
+  <div class="panel">
+    <h2>💔 You lose</h2>
+    <p class="subtitle">The Ember Court keeps the crown… this time</p>
+    <p class="big-score" id="lossScore"></p>
+    <p id="lossDetail"></p>
+    <button class="big-btn" id="lossAgainBtn" type="button">↻ &nbsp;Try again</button>
+  </div>
+</div>
+
+<script src="rules.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
