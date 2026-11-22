@@ -1,0 +1,159 @@
+/* Crown of Embers — original table styling. No external assets. */
+:root {
+  --felt: #14532d;
+  --felt-dark: #0c351d;
+  --gold: #d4a017;
+  --gold-soft: #f0c75e;
+  --ink: #1c1917;
+  --parchment: #f7f0dd;
+  --red: #c0392b;
+  --panel: rgba(0, 0, 0, 0.35);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  background: radial-gradient(ellipse at center, var(--felt) 0%, var(--felt-dark) 100%);
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app { max-width: 1100px; margin: 0 auto; padding: 12px 16px 24px; }
+
+header.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 2px 12px; border-bottom: 2px solid var(--gold);
+}
+header.topbar h1 { font-size: 26px; letter-spacing: 1px; color: var(--gold-soft); }
+header.topbar h1 .suit-red { color: #ff6b5e; }
+.top-actions button {
+  background: transparent; color: var(--parchment);
+  border: 1px solid var(--gold); border-radius: 6px;
+  padding: 6px 12px; margin-left: 8px; cursor: pointer; font-family: inherit;
+}
+.top-actions button:hover { background: rgba(212, 160, 23, 0.25); }
+
+.zone { padding: 10px 4px; }
+.zone-label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 15px; margin-bottom: 8px;
+}
+.zone-label .who { font-weight: bold; font-size: 18px; }
+.zone-label .who .tag {
+  font-size: 12px; font-weight: normal; color: var(--gold-soft);
+  border: 1px solid var(--gold); border-radius: 10px; padding: 1px 8px; margin-left: 6px;
+}
+
+.life-row { display: flex; align-items: center; gap: 10px; }
+.life-bar {
+  flex: 1; height: 22px; background: #00000066; border: 1px solid var(--gold);
+  border-radius: 11px; overflow: hidden;
+}
+.life-fill {
+  height: 100%; background: linear-gradient(90deg, #e74c3c, #f39c12);
+  transition: width 0.4s ease; text-align: right;
+}
+.life-num { font-size: 20px; font-weight: bold; min-width: 90px; text-align: right; }
+.shield-badge {
+  background: #3498db; color: #fff; border-radius: 12px; padding: 2px 10px;
+  font-size: 14px; font-weight: bold;
+}
+.energy-row { margin-top: 6px; font-size: 15px; color: var(--gold-soft); }
+.energy-row .pip {
+  display: inline-block; width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--gold); margin-right: 4px; vertical-align: middle;
+}
+.energy-row .pip.full { background: var(--gold); }
+
+.hand { display: flex; gap: 10px; min-height: 150px; flex-wrap: wrap; align-items: flex-start; }
+.hand-label { font-size: 13px; color: #d8d0b8; margin: 6px 0 4px; }
+
+.card {
+  width: 96px; height: 136px; border-radius: 10px; background: #fdf6e3;
+  color: var(--ink); border: 2px solid #8a6d1f;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  padding: 8px 6px; cursor: pointer; position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+.card:hover { transform: translateY(-10px); box-shadow: 0 10px 18px rgba(0, 0, 0, 0.6); }
+.card .rank { font-size: 30px; font-weight: bold; line-height: 1; }
+.card .suit { font-size: 34px; line-height: 1; }
+.card .suit-name { font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; }
+.card .power { font-size: 11px; font-style: italic; text-align: center; color: #555; }
+.card .cost {
+  position: absolute; top: -8px; left: -8px; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold); color: #231a05; font-weight: bold; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff3c4;
+}
+.card .key-hint {
+  position: absolute; bottom: -8px; right: -4px; font-size: 11px; background: #00000088;
+  color: #fff; border-radius: 4px; padding: 1px 5px;
+}
+.card.red { color: var(--red); }
+.card.unaffordable { opacity: 0.45; cursor: not-allowed; }
+.card.unaffordable:hover { transform: none; }
+.card.back {
+  background: repeating-linear-gradient(45deg, #7b1e14 0 12px, #a93226 12px 24px);
+  border-color: var(--gold); cursor: default; justify-content: center;
+}
+.card.back .emblem { font-size: 44px; color: var(--gold-soft); }
+.card.back:hover { transform: none; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); }
+.card.small { width: 64px; height: 92px; padding: 5px 4px; }
+.card.small .rank { font-size: 20px; }
+.card.small .suit { font-size: 22px; }
+.card.small .emblem { font-size: 28px; }
+
+.midbar {
+  display: flex; gap: 14px; align-items: stretch; margin: 6px 0;
+}
+#log {
+  flex: 1; background: var(--panel); border: 1px solid #ffffff22; border-radius: 8px;
+  padding: 10px 12px; font-size: 14px; line-height: 1.5; min-height: 86px; max-height: 120px;
+  overflow-y: auto;
+}
+#log .turn-head { color: var(--gold-soft); font-weight: bold; }
+#endTurnBtn {
+  background: var(--gold); color: #231a05; border: none; border-radius: 10px;
+  font-family: inherit; font-size: 18px; font-weight: bold; padding: 10px 26px; cursor: pointer;
+}
+#endTurnBtn:hover:not(:disabled) { background: var(--gold-soft); }
+#endTurnBtn:disabled { opacity: 0.4; cursor: default; }
+#turnBanner {
+  text-align: center; font-size: 15px; color: var(--gold-soft); min-height: 20px; margin: 2px 0;
+}
+
+.overlay {
+  position: fixed; inset: 0; background: rgba(5, 20, 10, 0.88);
+  display: flex; align-items: center; justify-content: center; z-index: 10;
+}
+.overlay.hidden { display: none; }
+.panel {
+  background: #fdf6e3; color: var(--ink); border: 3px solid var(--gold); border-radius: 16px;
+  max-width: 560px; width: 92%; padding: 28px 30px; text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+.panel h2 { font-size: 34px; margin-bottom: 6px; }
+.panel h2 .suit-red { color: var(--red); }
+.panel .subtitle { font-style: italic; color: #665; margin-bottom: 14px; }
+.panel p { margin-bottom: 10px; line-height: 1.55; font-size: 15px; }
+.panel .big-score { font-size: 22px; font-weight: bold; margin: 12px 0; }
+.panel .rules { text-align: left; font-size: 14px; margin: 0 auto 14px; max-width: 440px; }
+.panel .rules li { margin-bottom: 6px; }
+.big-btn {
+  background: var(--gold); color: #231a05; border: none; border-radius: 10px;
+  font-family: inherit; font-size: 20px; font-weight: bold; padding: 12px 34px;
+  cursor: pointer; margin-top: 6px;
+}
+.big-btn:hover { background: var(--gold-soft); }
+.ghost-btn {
+  background: transparent; border: 1px solid #8a6d1f; color: #5c4a12; border-radius: 8px;
+  font-family: inherit; padding: 8px 18px; cursor: pointer; margin-top: 10px;
+}
+#winScreen .panel { border-color: #27ae60; }
+#lossScreen .panel { border-color: var(--red); }
+.hint { font-size: 13px; color: #cbbf9a; text-align: center; margin-top: 8px; }
